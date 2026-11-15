@@ -1,0 +1,20 @@
+name: QA APK signature transfer (one-off)
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  transfer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload signed APK binary delta only
+        uses: actions/upload-artifact@v4
+        with:
+          name: KADR-HLS-TEST-300-signed-patch
+          path: qa-transfer/KADR_HLS_TEST_300_signed_delta.base64
+          if-no-files-found: error
+          retention-days: 1
